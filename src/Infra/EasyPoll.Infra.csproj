@@ -9,5 +9,5 @@
     <ItemGroup>
       <ProjectReference Include="..\Core\EasyPoll.Core.csproj" />
     </ItemGroup>
-
+    
 </Project>

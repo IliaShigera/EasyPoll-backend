@@ -6,6 +6,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Core'))">
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.4"/>
     </ItemGroup>
 
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Infra'))">

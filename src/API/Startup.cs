@@ -6,6 +6,9 @@ internal static partial class Program
     {
         sc.AddSerilog();
 
+        sc.AddSignalR();
+        sc.AddControllers();
+
         sc.AddInfrastructure(config);
     }
 
@@ -17,8 +20,9 @@ internal static partial class Program
         {
         }
 
-
         app.UseHttpsRedirection();
+        app.MapControllers();
+        // app.MapHub<>()
     }
 
     private static void ConfigureAppSettings(ConfigurationManager manager)

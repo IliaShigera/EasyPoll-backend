@@ -4,9 +4,14 @@ public static class DependencyInjection
 {
     public static void AddInfrastructure(this IServiceCollection sc, IConfiguration config)
     {
-        var conn = config.GetConnectionString("Postgres")
-                   ?? throw new ApplicationException("Conn string for Postgres not configured in appsettings.json");
+        var postgresConn = config.GetConnectionString("Postgres")
+                           ?? throw new ApplicationException("Conn string for Postgres not configured in appsettings");
 
-        sc.AddDbContext<AppDbContext>(options => options.UseNpgsql(conn));
+        var redisConn = config.GetConnectionString("Redis")
+                        ?? throw new ApplicationException("Conn string for Redis not configured in appsettings");
+
+        sc.AddDbContext<AppDbContext>(options => options.UseNpgsql(postgresConn));
+
+        sc.AddStackExchangeRedisCache(options => options.Configuration = redisConn);
     }
 }

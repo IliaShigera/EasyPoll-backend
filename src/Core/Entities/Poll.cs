@@ -4,16 +4,19 @@ public sealed class Poll
 {
     private readonly List<string> _options = [];
 
-    private Poll(
+    public Poll(
         string question,
+        List<string> options,
         DateTime createdAt,
         DateTime expiresAt,
+        PollStatus status,
         bool showResultsAfterVoteOnly)
     {
         Question = question;
+        _options = options;
         CreatedAt = createdAt;
         ExpiresAt = expiresAt;
-        Status = PollStatus.Active;
+        Status = status;
         ShowResultsAfterVoteOnly = showResultsAfterVoteOnly;
     }
 

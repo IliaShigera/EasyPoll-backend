@@ -7,7 +7,8 @@ internal static partial class Program
         sc.AddSerilog();
 
         sc.AddSignalR();
-        sc.AddControllers();
+        sc.AddControllers(options =>
+            options.Filters.Add<ResponseWrapperFilter>());
 
         sc.AddInfrastructure(config);
     }
@@ -15,14 +16,10 @@ internal static partial class Program
     private static void ConfigureHttpPipeline(WebApplication app)
     {
         app.UseSerilogRequestLogging();
-
-        if (app.Environment.IsDevelopment())
-        {
-        }
-
+        app.UseMiddleware<GlobalHandlerMiddleware>();
         app.UseHttpsRedirection();
         app.MapControllers();
-        // app.MapHub<>()
+        app.MapHub<VoteHub>("/voteHub");
     }
 
     private static void ConfigureAppSettings(ConfigurationManager manager)

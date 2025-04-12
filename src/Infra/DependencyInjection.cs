@@ -1,3 +1,5 @@
+using EasyPoll.Infra.Services;
+
 namespace EasyPoll.Infra;
 
 public static class DependencyInjection
@@ -11,7 +13,12 @@ public static class DependencyInjection
                         ?? throw new ApplicationException("Conn string for Redis not configured in appsettings");
 
         sc.AddDbContext<AppDbContext>(options => options.UseNpgsql(postgresConn));
-
         sc.AddStackExchangeRedisCache(options => options.Configuration = redisConn);
+
+        sc.AddScoped<IAppDbContext, AppDbContext>();
+        sc.AddSingleton<RedisClient>(_ => new RedisClient(redisConn));
+        sc.AddSingleton<ICacheService, CacheService>();
+
+        sc.AddScoped<IPollService, PollService>();
     }
 }

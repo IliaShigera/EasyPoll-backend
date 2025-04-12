@@ -2,7 +2,7 @@ namespace EasyPoll.Core.Entities;
 
 public sealed class Vote
 {
-    private Vote(Guid pollId, int optionIndex, string voterFingerprint, DateTime timestamp)
+    public Vote(Guid pollId, int optionIndex, string voterFingerprint, DateTime timestamp)
     {
         PollId = pollId;
         OptionIndex = optionIndex;
